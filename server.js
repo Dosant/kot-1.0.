@@ -38,9 +38,6 @@ axios.get(`http://${systemUrl}/api/elements`)
     elements = result.data;
   });
 
-app.use('/', express.static('build/'));
-app.use('/*', express.static('build/index.html'));
-
 app.get('/status', (req, res, next) => {
     res.json({isConnected: ws.readyState === ws.OPEN, isActive: !!imitationTimer });
 });
@@ -69,6 +66,9 @@ app.get('/reconnect', (req, res, next) => {
     res.send(true);
   }
 });
+
+app.use('/', express.static('build/'));
+app.use('/*', express.static('build/index.html'));
 
 
 function startImitation(errorRate, period) {
